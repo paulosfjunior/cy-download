@@ -5,7 +5,7 @@ declare namespace Cypress {
     /**
      * Custom command to verify that file has been downloaded
      * @param fileName - string
-     * @param options - { timeout: number, interval: number, contains: boolean, notContains: boolean, deleteFiles: boolean }
+     * @param options - { timeout: number, interval: number, contains: boolean, notContains: boolean }
      * @example
      *  cy.verifyDownload('filename.zip')
      *  cy.verifyDownload('filename.zip', { timeout: 20000, interval: 500 });
@@ -14,7 +14,7 @@ declare namespace Cypress {
      */
     verifyDownload(
       fileName: string,
-      options?: { timeout?: number; interval?: number; contains?: boolean, notContains?: boolean, deleteFiles?: boolean }
+      options?: { timeout?: number; interval?: number; contains?: boolean, notContains?: boolean }
     ): Chainable<boolean>;
 
     /**

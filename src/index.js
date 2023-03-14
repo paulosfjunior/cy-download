@@ -13,11 +13,10 @@ const addCustomCommand = () => {
       timeout: 10000,
       interval: 200,
       contains: false,
-      notContains: false,
-      deleteFiles: false
+      notContains: false
     };
 
-    let { timeout, interval, contains, notContains, deleteFiles } = { ...defaultOptions, ...options };
+    let { timeout, interval, contains, notContains } = { ...defaultOptions, ...options };
 
     const downloadsFolder = Cypress.config('downloadsFolder');
     const downloadFileName = join(downloadsFolder, fileName);
@@ -39,7 +38,7 @@ const addCustomCommand = () => {
     let retries = Math.floor(timeout / interval);
 
     const checkFile = (result) => {
-      if (result || notContains || deleteFiles) return result;
+      if (result || notContains) return result;
 
       if (retries < 1) {
         if (contains)
@@ -59,7 +58,7 @@ const addCustomCommand = () => {
     const resolveValue = () => {
       let result;
 
-      if (contains || notContains || deleteFiles) {
+      if (contains || notContains) {
         result = cy.task('findFiles', { path: downloadsFolder, fileName })
           .then((files) => {
             const getTempName = () => `${randomBytes(8)}-temp-file-name-${randomBytes(8)}`;
@@ -71,19 +70,12 @@ const addCustomCommand = () => {
               );
 
             if (files.length > 0) {
-              if (deleteFiles) {
-                for (const file of files) {
-                  cy.task('deleteFiles', join(downloadsFolder, file))
-                }
-              } else {
+              if (files.length > 1)
+                cy.log(
+                  `***WARNING!*** Found ${files.length} files for query '${fileName}', first [${files[0]}] will be used for validation. List of files: [${files}].`
+                );
 
-                if (files.length > 1)
-                  cy.log(
-                    `***WARNING!*** Found ${files.length} files for query '${fileName}', first [${files[0]}] will be used for validation. List of files: [${files}].`
-                  );
-
-                pathFile = files[0];
-              }
+              pathFile = files[0];
             }
 
             return cy.task('isFileExist', { path: join(downloadsFolder, pathFile || getTempName()), notContains });
@@ -132,17 +124,19 @@ const addCustomCommand = () => {
             const getTempName = () => `${randomBytes(8)}-temp-file-name-${randomBytes(8)}`;
             let pathFile;
 
-            if (files == null)
-              throw new Error(
+            if (files == null) {
+              cy.log(
                 `Base path [${downloadsFolder}] to verify download files does not exist.`
               );
-
-            if (files.length > 0) {
-              for (const file of files) {
-                cy.task('deleteFiles', join(downloadsFolder, file));
+            }
+            else {
+              if (files.length > 0) {
+                for (const file of files) {
+                  cy.task('deleteFiles', join(downloadsFolder, file));
+                }
+  
+                pathFile = files[0]
               }
-
-              pathFile = files[0]
             }
 
             return cy.task('isFileExist', { path: join(downloadsFolder, pathFile || getTempName()), notContains });
