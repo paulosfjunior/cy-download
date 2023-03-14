@@ -1,5 +1,5 @@
 {
-  "name": "cy-downloads",
+  "name": "cy-download",
   "version": "1.0.0",
   "description": "Cypress custom command to wait, check if the file has been downloaded and clear download folder. Project based on cy-verify-download by Yevhen Laichenkov elaichenkov@gmail.com",
   "files": [
