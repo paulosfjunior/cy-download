@@ -64,21 +64,22 @@ const addCustomCommand = () => {
             const getTempName = () => `${randomBytes(8)}-temp-file-name-${randomBytes(8)}`;
             let pathFile;
 
-            if (files == null)
-              throw new Error(
+            if (files == null){
+              cy.log(
                 `Base path [${downloadsFolder}] to verify download files does not exist.`
               );
-
-            if (files.length > 0) {
-              if (files.length > 1)
-                cy.log(
-                  `***WARNING!*** Found ${files.length} files for query '${fileName}', first [${files[0]}] will be used for validation. List of files: [${files}].`
-                );
-
-              pathFile = files[0];
+            } else {
+              if (files.length > 0) {
+                if (files.length > 1)
+                  cy.log(
+                    `***WARNING!*** Found ${files.length} files for query '${fileName}', first [${files[0]}] will be used for validation. List of files: [${files}].`
+                  );
+  
+                pathFile = files[0];
+              }
+  
+              return cy.task('isFileExist', { path: join(downloadsFolder, pathFile || getTempName()), notContains });
             }
-
-            return cy.task('isFileExist', { path: join(downloadsFolder, pathFile || getTempName()), notContains });
           });
       } else {
         result = cy.task('isFileExist', { path: downloadFileName });
