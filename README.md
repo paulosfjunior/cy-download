@@ -1,4 +1,4 @@
-# cy-download [![CodeQL](https://github.com/paulosfjunior/cy-download/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/paulosfjunior/cy-download/actions/workflows/codeql-analysis.yml)
+# cy-download [![CI](https://github.com/paulosfjunior/cy-download/actions/workflows/blank.yml/badge.svg?branch=main)](https://github.com/paulosfjunior/cy-download/actions/workflows/blank.yml) [![CodeQL](https://github.com/paulosfjunior/cy-download/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/paulosfjunior/cy-download/actions/workflows/codeql-analysis.yml)
 
 <div align="center">
 <p>Cypress custom command to wait, make sure the file has been downloaded and clean up the download folder. Project based on cy-verify-download by Yevhen Laichenkov elaichenkov@gmail.com.</p>
