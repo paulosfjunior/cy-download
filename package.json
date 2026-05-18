@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/paulosfjunior/cy-download#readme",
   "devDependencies": {
-    "cypress": "^12.7.0",
+    "cypress": "^15.15.0",
     "release-it": "^15.8.0",
     "serve": "^14.2.0"
   }
